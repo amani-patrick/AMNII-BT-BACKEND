@@ -56,6 +56,4 @@ API endpoints will be provided to serve the frontend with data such as the user'
 - **MetaTrader 5 (MT5)** installed on your system.
 - **Django** installed in your Python environment.
 
-### Install Dependencies
-Install the required Python packages by running:
 
