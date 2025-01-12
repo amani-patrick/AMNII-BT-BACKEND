@@ -59,5 +59,3 @@ API endpoints will be provided to serve the frontend with data such as the user'
 ### Install Dependencies
 Install the required Python packages by running:
 
-```bash
-pip install -r requirements.txt
