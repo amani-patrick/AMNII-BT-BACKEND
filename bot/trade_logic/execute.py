@@ -1,21 +1,28 @@
 import MetaTrader5 as mt5
 import logging
-import time
+import time,os
 from multiprocessing import Process
-from utils import swing_highs_lows_res
-from fetch_data import fetch_data as fetch
-from .utils import calculate_tp_sl, check_dataframe, tick_info, progress_sleep, select_symbol
-from strategy_1 import fvg_strategy  
-from strategy_2 import sma_ema_strategy
-from strategy_3 import strategy_with_trending_support_resistance
-from strategy_4 import strategy_with_order_blocks
+from bot.trade_logic import fetch_data as fetch
+from bot.trade_logic.utils import calculate_tp_sl,check_dataframe,log_trade,portfolio,progress_sleep,select_symbol,symbol,tick_info
+from bot.trade_logic import fetch_data
+from bot.trade_logic.utils import smc_indicators_res
+from bot.trade_logic import strategy_1,strategy_2,strategy_3,strategy_4
+from dotenv import load_dotenv
+
+load_dotenv()
+
+login = int(os.getenv('LOGIN'))
+server = os.getenv('SERVER')
+password = os.getenv('PASSWORD')
+if not mt5.initialize():
+    logging.error("MetaTrader 5 initialization failed.")
+    exit(1)
+swing_highs_lows_res,fvg_res,ob_res,prev_high_low_res = smc_indicators_res(fetch_data(symbol))
 
 # Example symbol and setup
 symbol = "EURUSD"
 trade_count = 0
-if not mt5.symbol_select(symbol, True):
-    logging.error(f"Failed to select symbol {symbol}")
-    progress_sleep(0)
+select_symbol(symbol)
 
 select_symbol(symbol)
 
@@ -85,10 +92,10 @@ def run_strategy(strategy_function):
 
 if __name__ == '__main__':
     strategies = [
-        fvg_strategy,
-        sma_ema_strategy,
-        strategy_with_trending_support_resistance,
-        strategy_with_order_blocks
+        strategy_1,
+        strategy_2,
+        strategy_3,
+        strategy_4,
     ]
 
     processes = []

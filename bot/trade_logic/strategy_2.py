@@ -1,10 +1,10 @@
 import MetaTrader5 as mt5
 import pandas as pd
-import fetch_data as fetch
+import trade_logic.fetch_data as fetch
 import talib
-import utils
-from .utils import calculate_tp_sl
-from strategy_1 import symbol
+import trade_logic.utils
+from trade_logic.utils import calculate_tp_sl
+from trade_logic.strategy_1 import symbol
 
 data=fetch(symbol)
 

@@ -1,6 +1,7 @@
-from .fetch_data import fetch_data as fetch
-from .utils import select_symbol as select
-from .utils import tick_info,check_dataframe,calculate_tp_sl
+from bot.trade_logic import fetch_data
+from bot.trade_logic.utils import smc_indicators_res
+from trade_logic.utils import select_symbol as select
+from trade_logic.utils import tick_info,check_dataframe,calculate_tp_sl
 import smartmoneyconcepts as smc
 import pandas  as pd
 
@@ -13,8 +14,8 @@ def fvg_strategy(fvg_res: pd.DataFrame, current_price_data: dict,symbol,data):
     :param fvg_res: DataFrame with FVG analysis containing columns ['FVG', 'Top', 'Bottom', 'MitigatedIndex']
     :param current_price_data: Dictionary containing current price data with 'low' price
     '''
+    swing_highs_lows_res,fvg_res,ob_res,prev_high_low_res = smc_indicators_res(fetch_data(symbol))
 
-    fvg_res = smc.fvg(data[['open', 'high', 'low', 'close', 'volume']], join_consecutive=False)
     select(symbol)
     tick_info=tick_info(symbol)
     check_dataframe(current_price_data)
