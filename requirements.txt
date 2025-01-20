@@ -1,0 +1,11 @@
+numpy
+pandas
+python-dotenv
+pytz
+six
+tzdata
+pandas
+logging
+
+
+
