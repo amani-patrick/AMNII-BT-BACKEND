@@ -4,5 +4,4 @@ from .models import Order
 class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
-        fields = '__all__'
-        read_only_fields = ['user', 'order_id', 'timestamp', 'updated_at']  # Fields automatically set by the system
+        fields = '__all__'  # You can specify the fields you want to expose, or use '__all__' for all fields

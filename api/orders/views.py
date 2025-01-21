@@ -1,66 +1,37 @@
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from .models import Order
-from rest_framework import status
+from .serializers import OrderSerializer  # Correct relative import for your app
+from .models import Order  # Import the Order model
 
-from .serializers import OrderSerializer
-
-@api_view(['GET'])
-@permission_classes([IsAuthenticated])
-def list_orders(request):
-    """Retrieve all orders for the authenticated user."""
-    orders = Order.objects.filter(user=request.user)
-    serializer = OrderSerializer(orders, many=True)
-    return Response(serializer.data)
-
-@api_view(['POST'])
-@permission_classes([IsAuthenticated])
-def create_order(request):
-    """Create a new order for the authenticated user."""
-    data = request.data
-    data['user'] = request.user.id  # Ensure the order is linked to the authenticated user
-    serializer = OrderSerializer(data=data)
-    if serializer.is_valid():
-        serializer.save()
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+from django.db.models import Avg, Sum
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
-def retrieve_order(request, order_id):
-    """Retrieve a specific order by its ID for the authenticated user."""
-    try:
-        order = Order.objects.get(order_id=order_id, user=request.user)
-    except Order.DoesNotExist:
-        return Response({"message": "Order not found."}, status=status.HTTP_404_NOT_FOUND)
+def get_analytics(request):
+    """Fetch overall analytics for the user's trading activity."""
+    user = request.user
 
-    serializer = OrderSerializer(order)
-    return Response(serializer.data)
+    # Query the user's orders
+    trades = Order.objects.filter(user=user)  # Corrected: Use the Order model, not OrderSerializer.objects
+    total_trades = trades.count()
+    winning_trades = trades.filter(profit__gt=0).count() 
+    losing_trades = trades.filter(profit__lte=0).count()  
+    profit_loss = trades.aggregate(total_profit=Sum('profit'))['total_profit'] or 0  
+    average_trade_duration = trades.aggregate(avg_duration=Avg('duration'))['avg_duration'] or 0  # Handles `None` gracefully
 
-@api_view(['PUT', 'PATCH'])
-@permission_classes([IsAuthenticated])
-def update_order(request, order_id):
-    """Update an existing order for the authenticated user."""
-    try:
-        order = Order.objects.get(order_id=order_id, user=request.user)
-    except Order.DoesNotExist:
-        return Response({"message": "Order not found."}, status=status.HTTP_404_NOT_FOUND)
+    # Format duration (assuming `duration` is stored as seconds in the model)
+    avg_duration_formatted = (
+        f"{int(average_trade_duration // 3600):02}:{int((average_trade_duration % 3600) // 60):02}:{int(average_trade_duration % 60):02}"
+    )
 
-    serializer = OrderSerializer(order, data=request.data, partial=(request.method == 'PATCH'))
-    if serializer.is_valid():
-        serializer.save()
-        return Response(serializer.data)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    # Prepare the response data
+    data = {
+        "total_trades": total_trades,
+        "winning_trades": winning_trades,
+        "losing_trades": losing_trades,
+        "profit_loss": profit_loss,
+        "average_trade_duration": avg_duration_formatted,
+    }
 
-@api_view(['DELETE'])
-@permission_classes([IsAuthenticated])
-def delete_order(request, order_id):
-    """Delete an order for the authenticated user."""
-    try:
-        order = Order.objects.get(order_id=order_id, user=request.user)
-    except Order.DoesNotExist:
-        return Response({"message": "Order not found."}, status=status.HTTP_404_NOT_FOUND)
-
-    order.delete()
-    return Response({"message": "Order deleted successfully."}, status=status.HTTP_204_NO_CONTENT)
+    return Response(data)
