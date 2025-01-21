@@ -1,7 +1,7 @@
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from orders.models import Order  # Import your Order model
+from ..orders. import Order  # Import your Order model
 from django.db.models import Avg, Count, Sum
 
 @api_view(['GET'])
