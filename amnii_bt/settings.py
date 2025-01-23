@@ -35,6 +35,7 @@ SIMPLE_JWT = {
 }
 
 
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -112,6 +113,21 @@ SIMPLE_JWT = {
     'ROTATE_REFRESH_TOKENS': True,
     'BLACKLIST_AFTER_ROTATION': True,
 }
+
+# settings.py
+
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS': {
+        'Bearer': {
+            'type': 'apiKey',
+            'name': 'Authorization',
+            'in': 'header',
+            'description': "JWT Authorization header using the Bearer scheme. Example: 'Bearer <your-token>'",
+        },
+    },
+    'USE_SESSION_AUTH': False,  # Disable session authentication in Swagger UI
+}
+
 
 
 
