@@ -6,6 +6,7 @@ class TradingAccount(models.Model):
     name = models.CharField(max_length=100)
     broker = models.CharField(max_length=100)
     account_number = models.CharField(max_length=50)
+    broker_server = models.CharField(max_length=100)  # Added field for MT5 broker server
     balance = models.DecimalField(max_digits=15, decimal_places=2)
     created_at = models.DateTimeField(auto_now_add=True)
 

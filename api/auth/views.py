@@ -3,79 +3,71 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import authenticate
-from drf_yasg.utils import swagger_auto_schema
-from drf_yasg import openapi
-from .serializers import RegisterSerializer, LoginSerializer
 from rest_framework.permissions import AllowAny
+from rest_framework.views import exception_handler
+from .serializers import RegisterSerializer, LoginSerializer
 
-
-# Signup View
-@swagger_auto_schema(
-    method='post',
-    request_body=RegisterSerializer,
-    responses={
-        201: openapi.Response('User created successfully.', RegisterSerializer),
-        400: 'Bad Request - Validation errors',
-    }
-)
+# User registration endpoint
 @api_view(['POST'])
-@permission_classes([AllowAny])
 def signup(request):
-    """User Signup (Registration)."""
+    """
+    User registration endpoint.
+    Creates a new user, sets a password, and returns an access token.
+    """
     serializer = RegisterSerializer(data=request.data)
     if serializer.is_valid():
-        user = serializer.save()
-        return Response({
-            'message': 'User created successfully.',
-            'user': RegisterSerializer(user).data
-        }, status=status.HTTP_201_CREATED)
+        user = serializer.save()  # Create the user using the serializer
+
+        # Generate tokens
+        refresh = RefreshToken.for_user(user)
+        access_token = str(refresh.access_token)
+
+        # Build response data
+        response_data = {
+            'user': {
+                'username': user.username,
+                'email': user.email,
+                'first_name': user.first_name,
+                'last_name': user.last_name,
+            },
+            'access_token': access_token,
+        }
+
+        return Response(response_data, status=status.HTTP_201_CREATED)
+
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
-# Login View
-@swagger_auto_schema(
-    method='post',
-    request_body=LoginSerializer,
-    responses={
-        200: openapi.Response(
-            'Login successful.',
-            openapi.Schema(
-                type=openapi.TYPE_OBJECT,
-                properties={
-                    'access_token': openapi.Schema(type=openapi.TYPE_STRING, description='Access token'),
-                    'refresh_token': openapi.Schema(type=openapi.TYPE_STRING, description='Refresh token'),
-                },
-            )
-        ),
-        400: 'Invalid credentials or validation errors'
-    }
-)
-
+# User login endpoint
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def login(request):
-    """User Login with JWT authentication."""
+    """
+    Authenticate a user, return an access token, and set a refresh token in an HTTP-only cookie.
+    """
     serializer = LoginSerializer(data=request.data)
     if serializer.is_valid():
+        user = serializer.validated_data
 
-        return Response(serializer.validated_data, status=status.HTTP_200_OK)
+        # Generate tokens
+        refresh = RefreshToken.for_user(user)
+        access_token = str(refresh.access_token)
+
+        # Response with access token
+        response = Response({'access_token': access_token}, status=status.HTTP_200_OK)
+
+        # Set the refresh token as an HTTP-only cookie
+        response.set_cookie(
+            key='refresh_token',
+            value=str(refresh),
+            httponly=True,
+            secure=True,  # Use True in production
+            samesite='Strict',  # Adjust based on your app's requirements
+        )
+        return response
+
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-# Logout View
-@swagger_auto_schema(
-    method='post',
-    request_body=openapi.Schema(
-        type=openapi.TYPE_OBJECT,
-        properties={
-            'refresh_token': openapi.Schema(type=openapi.TYPE_STRING, description='The refresh token to blacklist'),
-        },
-        required=['refresh_token'],
-    ),
-    responses={
-        200: 'Successfully logged out',
-        400: 'Bad Request - Missing or invalid refresh token',
-    }
-)
+# User logout endpoint (Invalidate the refresh token)
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def logout(request):
@@ -91,3 +83,12 @@ def logout(request):
         return Response({"message": "Successfully logged out."}, status=status.HTTP_200_OK)
     except Exception as e:
         return Response({"message": f"Error logging out: {str(e)}"}, status=status.HTTP_400_BAD_REQUEST)
+
+# Custom exception handler
+def custom_exception_handler(exc, context):
+    response = exception_handler(exc, context)
+    
+    if response is not None and response.status_code == status.HTTP_401_UNAUTHORIZED:
+        # Customize the message
+        response.data = {'message': 'Unauthorised ! Access denied '}
+    return response
