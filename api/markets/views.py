@@ -2,6 +2,7 @@ from alpha_vantage.foreignexchange import ForeignExchange
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from .models import CurrencyPair
 import logging
 
 # Set up logger
@@ -10,20 +11,20 @@ logger = logging.getLogger(__name__)
 # API Key for Alpha Vantage
 API_KEY = 'RA9EAD30J57VC8IR'
 
-# Supported forex pairs
-SUPPORTED_PAIRS = ["GBPUSD", "EURUSD", "USDJPY", "USDCHF"]
-
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def get_forex_data(request, symbol):
     """Fetch live forex data for specific pairs from Alpha Vantage."""
     
-    # Check if symbol is supported
-    if symbol not in SUPPORTED_PAIRS:
-        return Response({"message": "Invalid or unsupported currency pair."}, status=400)
+    try:
+        # Check if the symbol is in the database
+        currency_pair = CurrencyPair.objects.get(symbol=symbol)
 
-    # Extract from and to currency codes
-    from_currency, to_currency = symbol[:3], symbol[3:]
+        # Extract from and to currency codes
+        from_currency, to_currency = currency_pair.from_currency, currency_pair.to_currency
+
+    except CurrencyPair.DoesNotExist:
+        return Response({"message": "Invalid or unsupported currency pair."}, status=400)
 
     # Initialize the ForeignExchange object
     fx = ForeignExchange(key=API_KEY)

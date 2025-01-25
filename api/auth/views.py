@@ -6,6 +6,8 @@ from django.contrib.auth import authenticate
 from rest_framework.permissions import AllowAny
 from rest_framework.views import exception_handler
 from .serializers import RegisterSerializer, LoginSerializer
+from rest_framework_simplejwt.exceptions import TokenError
+
 
 # User registration endpoint
 @api_view(['POST'])
@@ -90,5 +92,36 @@ def custom_exception_handler(exc, context):
     
     if response is not None and response.status_code == status.HTTP_401_UNAUTHORIZED:
         # Customize the message
-        response.data = {'message': 'Unauthorised ! Access denied '}
+        response.data = {'message': 'Unauthorised! Access denied '}
     return response
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def refresh_token(request):
+    """
+    Custom token refresh endpoint.
+    Accepts a valid refresh token and returns a new access token.
+    """
+    refresh_token = request.data.get('refresh')  # Get the refresh token from the request body
+    
+    if not refresh_token:
+        return Response({"message": "Refresh token is required."}, status=status.HTTP_400_BAD_REQUEST)
+
+    try:
+        token = RefreshToken(refresh_token)
+        # Check if the token is blacklisted
+        token.check_blacklist()  # This will raise an error if the token is blacklisted
+        
+        # Generate new tokens
+        new_refresh_token = str(token)
+        new_access_token = str(token.access_token)
+        
+        return Response({
+            "access_token": new_access_token,
+            "refresh_token": new_refresh_token
+        }, status=status.HTTP_200_OK)
+
+    except TokenError:
+        return Response({"message": "The refresh token is blacklisted."}, status=status.HTTP_400_BAD_REQUEST)
+    except Exception as e:
+        return Response({"message": f"Error refreshing token: {str(e)}"}, status=status.HTTP_400_BAD_REQUEST)
