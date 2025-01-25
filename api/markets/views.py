@@ -17,23 +17,15 @@ def get_forex_data(request, symbol):
     """Fetch live forex data for specific pairs from Alpha Vantage."""
     
     try:
-        # Check if the symbol is in the database
         currency_pair = CurrencyPair.objects.get(symbol=symbol)
-
-        # Extract from and to currency codes
         from_currency, to_currency = currency_pair.from_currency, currency_pair.to_currency
 
     except CurrencyPair.DoesNotExist:
         return Response({"message": "Invalid or unsupported currency pair."}, status=400)
-
-    # Initialize the ForeignExchange object
     fx = ForeignExchange(key=API_KEY)
 
     try:
-        # Fetch forex data from Alpha Vantage
         data, _ = fx.get_currency_exchange_rate(from_currency=from_currency, to_currency=to_currency)
-
-        # Extract relevant data (example: exchange rate)
         exchange_rate = data.get('5. Exchange Rate', None)
 
         if exchange_rate is None:
@@ -44,5 +36,4 @@ def get_forex_data(request, symbol):
         logger.error(f"Error fetching forex data for {symbol}: {e}")
         return Response({"message": f"Failed to fetch data for {symbol}."}, status=500)
 
-    # Return the relevant data
     return Response({"symbol": symbol, "exchange_rate": exchange_rate})

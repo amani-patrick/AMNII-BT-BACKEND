@@ -38,13 +38,11 @@ def signup(request):
         return Response(response_data, status=status.HTTP_201_CREATED)
 
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-# User login endpoint
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def login(request):
     """
-    Authenticate a user, return an access token, and set a refresh token in an HTTP-only cookie.
+    Authenticate a user, return an access token, and set a refresh token in the response.
     """
     serializer = LoginSerializer(data=request.data)
     if serializer.is_valid():
@@ -53,18 +51,26 @@ def login(request):
         # Generate tokens
         refresh = RefreshToken.for_user(user)
         access_token = str(refresh.access_token)
+        refresh_token = str(refresh)
 
-        # Response with access token
-        response = Response({'access_token': access_token}, status=status.HTTP_200_OK)
+        # Response with access and refresh tokens
+        response = Response(
+            {
+                'access_token': access_token,
+                'refresh_token': refresh_token,  # Include the refresh token in the response
+            },
+            status=status.HTTP_200_OK,
+        )
 
-        # Set the refresh token as an HTTP-only cookie
+        # Optionally, you can also set the refresh token as an HTTP-only cookie
         response.set_cookie(
             key='refresh_token',
-            value=str(refresh),
+            value=refresh_token,
             httponly=True,
             secure=True,  # Use True in production
             samesite='Strict',  # Adjust based on your app's requirements
         )
+
         return response
 
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
