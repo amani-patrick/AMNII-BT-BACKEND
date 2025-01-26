@@ -7,15 +7,14 @@ class TradingAccountSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = TradingAccount
-        fields = ['id', 'user', 'name', 'broker', 'account_number', 'broker_server', 'balance', 'created_at', 'password']
+        fields = ['id', 'user', 'name', 'broker', 'account_number', 'broker_server', 'balance', 'created_at']
 
     def create(self, validated_data):
-        # Ensure the password is hashed before saving
         password = validated_data.pop('password', None)
         account = super().create(validated_data)
         
         if password:
-            account.set_password(password)  # Hash the password before saving
+            account.set_password(password) 
             account.save()
 
         return account
