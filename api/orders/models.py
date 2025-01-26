@@ -22,8 +22,8 @@ class Order(models.Model):
     take_profit = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     stop_loss = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     quantity = models.PositiveIntegerField()
-    pnl = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)  # Optional, only if you want to store it
+    pnl = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    symbol = models.CharField(max_length=20) 
 
     def __str__(self):
-        return f"Order {self.id} - {self.status} at {self.entry_price}"
-
+        return f"Order {self.id} - {self.symbol} - {self.status} at {self.entry_price}"

@@ -20,7 +20,7 @@ def get_strategies(request):
 
 
 @api_view(['POST'])
-@permission_classes([IsAdminUser])  # Only admin users can access this view
+@permission_classes([IsAdminUser]) 
 def create_strategy(request):
     """
     Create a new trading strategy. Only admin users are allowed to create strategies.
@@ -59,7 +59,6 @@ def update_strategy(request, strategy_id):
     if not name or not description:
         return Response({"detail": "Name and description are required."}, status=status.HTTP_400_BAD_REQUEST)
 
-    # Update the strategy fields
     strategy.name = name
     strategy.description = description
     strategy.parameters = parameters
