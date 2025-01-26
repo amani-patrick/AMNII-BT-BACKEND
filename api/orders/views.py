@@ -7,7 +7,6 @@ from decimal import Decimal
 from django.db.models import Sum
 from rest_framework.permissions import IsAuthenticated
 
-# Order List (GET)
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def order_list(request):
@@ -15,7 +14,6 @@ def order_list(request):
     serializer = OrderSerializer(orders, many=True)
     return Response(serializer.data)
 
-# Order Creation (POST)
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def order_create(request):
@@ -25,7 +23,6 @@ def order_create(request):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-# Order Retrieve (GET)
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def order_retrieve(request, pk):
@@ -37,7 +34,6 @@ def order_retrieve(request, pk):
     serializer = OrderSerializer(order)
     return Response(serializer.data)
 
-# Order Update Status (PUT)
 @api_view(['PUT'])
 @permission_classes([IsAuthenticated])
 def order_update_status(request, pk):
@@ -48,10 +44,10 @@ def order_update_status(request, pk):
     except Order.DoesNotExist:
         return Response({'message': 'Order not found.'}, status=status.HTTP_404_NOT_FOUND)
 
-    new_status = request.data.get('status')  # Fetch 'status' from request data
+    new_status = request.data.get('status') 
     if new_status:
-        new_status = new_status.upper()  # Convert status to uppercase for consistency
-        valid_statuses = ['PENDING', 'COMPLETED', 'CANCELED']  # Example statuses; update based on your model
+        new_status = new_status.upper() 
+        valid_statuses = ['PENDING', 'COMPLETED', 'CANCELED'] 
         if new_status in valid_statuses:
             order.status = new_status
             if new_status == 'COMPLETED':
@@ -65,7 +61,7 @@ def order_update_status(request, pk):
 
     return Response({'detail': 'No status provided.'}, status=status.HTTP_400_BAD_REQUEST)
 
-# Order Update Take Profit and Stop Loss (PUT)
+
 @api_view(['PUT'])
 @permission_classes([IsAuthenticated])
 def order_update_take_profit_stop_loss(request, pk):
@@ -95,7 +91,6 @@ def order_update_take_profit_stop_loss(request, pk):
         'stop_loss': order.stop_loss
     }, status=status.HTTP_200_OK)
 
-# Order Update PnL (PUT)
 @api_view(['PUT'])
 @permission_classes([IsAuthenticated])
 def order_update_pnL(request, pk):
@@ -123,7 +118,6 @@ def order_update_pnL(request, pk):
 
     return Response({'detail': 'Current price is required for PnL calculation.'}, status=status.HTTP_400_BAD_REQUEST)
 
-# Order Delete (DELETE)
 @api_view(['DELETE'])
 @permission_classes([IsAuthenticated])
 def order_delete(request, pk):
@@ -137,10 +131,7 @@ def order_delete(request, pk):
 
 @api_view(['GET'])
 def net_profit(request):
-    # Calculate the sum of all PnL values (excluding None/null)
     total_pnl = Order.objects.aggregate(total_pnl=Sum('pnl'))['total_pnl']
-
-    # If no orders or no PnL values, default to 0
     total_pnl = total_pnl if total_pnl is not None else Decimal('0.00')
 
     return Response({'net_profit': str(total_pnl)}, status=status.HTTP_200_OK)
