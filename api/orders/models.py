@@ -13,6 +13,14 @@ class Order(models.Model):
         (CANCELED, 'Canceled'),
     ]
 
+    BUY = 'buy'
+    SELL = 'sell'
+
+    ACTION_CHOICES = [
+        (BUY, 'Buy'),
+        (SELL, 'Sell'),
+    ]
+
     id = models.AutoField(primary_key=True)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default=PENDING)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -23,7 +31,12 @@ class Order(models.Model):
     stop_loss = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     quantity = models.PositiveIntegerField()
     pnl = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
-    symbol = models.CharField(max_length=20) 
+    symbol = models.CharField(max_length=20)
+    action = models.CharField(max_length=4, choices=ACTION_CHOICES, default=BUY)  
 
     def __str__(self):
-        return f"Order {self.id} - {self.symbol} - {self.status} at {self.entry_price}"
+        return f"Order {self.id} - {self.symbol} - {self.action} - {self.status} at {self.entry_price}" 
+
+    def save(self, *args, **kwargs):
+      self.action = self.action.lower() 
+      super().save(*args, **kwargs)
