@@ -1,0 +1,200 @@
+2025-02-09 18:51:47,380 - INFO - Successfully logged into MT5 account 89059361 on server MetaQuotes-Demo
+2025-02-09 18:51:58,632 - ERROR - Failed to fetch forex data: [Errno 22] Invalid argument
+2025-02-09 18:51:58,632 - ERROR - Failed to fetch forex data: [Errno 22] Invalid argument
+2025-02-09 18:51:58,632 - ERROR - Failed to fetch forex data: [Errno 22] Invalid argument
+2025-02-09 18:51:58,632 - WARNING - No forex data available.
+2025-02-09 18:51:58,632 - WARNING - No forex data available.
+2025-02-09 18:51:58,632 - ERROR - Failed to fetch forex data: [Errno 22] Invalid argument
+2025-02-09 18:51:58,632 - ERROR - Error running strategy FVG on GBPUSD: 'NoneType' object is not subscriptable
+2025-02-09 18:51:58,632 - ERROR - Error running strategy FVG on EURUSD: 'NoneType' object is not subscriptable
+2025-02-09 18:57:02,086 - ERROR - Failed to fetch forex data: [Errno 22] Invalid argument
+2025-02-09 18:57:02,090 - ERROR - Failed to fetch forex data: [Errno 22] Invalid argument
+2025-02-09 18:57:02,090 - WARNING - No forex data available.
+2025-02-09 18:57:02,090 - WARNING - No forex data available.
+2025-02-09 19:02:03,623 - ERROR - Failed to fetch forex data: [Errno 22] Invalid argument
+2025-02-09 19:02:03,626 - ERROR - Failed to fetch forex data: [Errno 22] Invalid argument
+2025-02-09 19:02:03,626 - WARNING - No forex data available.
+2025-02-09 19:02:03,626 - WARNING - No forex data available.
+2025-02-09 19:07:05,126 - ERROR - Failed to fetch forex data: [Errno 22] Invalid argument
+2025-02-09 19:07:05,126 - WARNING - No forex data available.
+2025-02-09 19:07:05,131 - ERROR - Failed to fetch forex data: [Errno 22] Invalid argument
+2025-02-09 19:07:05,131 - WARNING - No forex data available.
+2025-02-09 19:12:06,757 - ERROR - Failed to fetch forex data: [Errno 22] Invalid argument
+2025-02-09 19:12:06,757 - WARNING - No forex data available.
+2025-02-09 19:12:06,767 - ERROR - Failed to fetch forex data: [Errno 22] Invalid argument
+2025-02-09 19:12:06,779 - WARNING - No forex data available.
+2025-02-09 19:17:08,152 - ERROR - Failed to fetch forex data: [Errno 22] Invalid argument
+2025-02-09 19:17:08,152 - WARNING - No forex data available.
+2025-02-09 19:17:08,158 - ERROR - Failed to fetch forex data: [Errno 22] Invalid argument
+2025-02-09 19:17:08,159 - WARNING - No forex data available.
+2025-02-09 19:22:09,723 - ERROR - Failed to fetch forex data: [Errno 22] Invalid argument
+2025-02-09 19:22:09,723 - ERROR - Failed to fetch forex data: [Errno 22] Invalid argument
+2025-02-09 19:22:09,723 - WARNING - No forex data available.
+2025-02-09 19:22:09,723 - WARNING - No forex data available.
+2025-02-09 19:27:11,375 - ERROR - Failed to fetch forex data: [Errno 22] Invalid argument
+2025-02-09 19:27:11,375 - ERROR - Failed to fetch forex data: [Errno 22] Invalid argument
+2025-02-09 19:27:11,375 - WARNING - No forex data available.
+2025-02-09 19:27:11,375 - WARNING - No forex data available.
+2025-02-09 19:32:06,321 - INFO - Successfully logged into MT5 account 89059361 on server MetaQuotes-Demo
+2025-02-09 19:32:09,610 - ERROR - Error running strategy FVG on EURUSD: index -1 is out of bounds for axis 0 with size 0
+2025-02-09 19:32:09,620 - ERROR - Error running strategy FVG on GBPUSD: index -1 is out of bounds for axis 0 with size 0
+2025-02-09 19:32:10,029 - INFO - No valid order block detected. Waiting for next interval.
+2025-02-09 19:32:10,037 - INFO - No valid order block detected. Waiting for next interval.
+2025-02-09 19:32:12,663 - ERROR - Failed to fetch forex data: [Errno 22] Invalid argument
+2025-02-09 19:32:12,663 - ERROR - Failed to fetch forex data: [Errno 22] Invalid argument
+2025-02-09 19:32:12,663 - WARNING - No forex data available.
+2025-02-09 19:32:12,663 - WARNING - No forex data available.
+2025-02-09 19:32:14,841 - ERROR - Failed to log in to MT5 account 1234 on server mt5
+2025-02-09 19:32:58,231 - ERROR - Error running strategy OBStrategy on GBPUSD: [Errno 22] Invalid argument
+2025-02-09 19:34:12,973 - INFO - Successfully logged into MT5 account 89059361 on server MetaQuotes-Demo
+2025-02-09 19:34:15,597 - ERROR - Error running strategy FVG on GBPUSD: index -1 is out of bounds for axis 0 with size 0
+2025-02-09 19:34:15,608 - ERROR - Error running strategy FVG on EURUSD: index -1 is out of bounds for axis 0 with size 0
+2025-02-09 19:34:15,853 - INFO - No valid order block detected. Waiting for next interval.
+2025-02-09 19:34:15,862 - INFO - No valid order block detected. Waiting for next interval.
+2025-02-09 19:34:17,655 - ERROR - Failed to log in to MT5 account 1234 on server mt5
+2025-02-09 19:34:23,948 - ERROR - Error running strategy OBStrategy on EURUSD: [Errno 22] Invalid argument
+2025-02-09 19:35:20,355 - INFO - Successfully logged into MT5 account 89059361 on server MetaQuotes-Demo
+2025-02-09 19:35:23,003 - ERROR - Error running strategy FVG on GBPUSD: Can only compare identically-labeled (both index and columns) DataFrame objects
+2025-02-09 19:35:23,022 - ERROR - Error running strategy FVG on EURUSD: Can only compare identically-labeled (both index and columns) DataFrame objects
+2025-02-09 19:35:23,361 - INFO - No valid order block detected. Waiting for next interval.
+2025-02-09 19:35:23,398 - ERROR - Error running strategy OBStrategy on GBPUSD: Data must be 1-dimensional, got ndarray of shape (0, 2) instead
+2025-02-09 19:37:11,443 - ERROR - Error running strategy OBStrategy on EURUSD: [Errno 22] Invalid argument
+2025-02-09 19:37:11,443 - INFO - MT5 shutdown successfully
+2025-02-09 19:37:14,079 - ERROR - Failed to fetch forex data: [Errno 22] Invalid argument
+2025-02-09 19:37:14,079 - ERROR - Failed to fetch forex data: [Errno 22] Invalid argument
+2025-02-09 19:37:14,079 - WARNING - No forex data available.
+2025-02-09 19:37:14,079 - WARNING - No forex data available.
+2025-02-09 19:42:15,757 - ERROR - Failed to fetch forex data: [Errno 22] Invalid argument
+2025-02-09 19:42:15,757 - WARNING - No forex data available.
+2025-02-09 19:42:15,761 - ERROR - Failed to fetch forex data: [Errno 22] Invalid argument
+2025-02-09 19:42:15,761 - WARNING - No forex data available.
+2025-02-09 19:47:17,669 - ERROR - Failed to fetch forex data: [Errno 22] Invalid argument
+2025-02-09 19:47:17,673 - WARNING - No forex data available.
+2025-02-09 19:47:17,676 - ERROR - Failed to fetch forex data: [Errno 22] Invalid argument
+2025-02-09 19:47:17,676 - WARNING - No forex data available.
+2025-02-09 19:48:33,525 - INFO - Successfully logged into MT5 account 89059361 on server MetaQuotes-Demo
+2025-02-09 19:48:35,836 - ERROR - Error running strategy FVG on EURUSD: index -1 is out of bounds for axis 0 with size 0
+2025-02-09 19:48:35,836 - ERROR - Error running strategy FVG on GBPUSD: index -1 is out of bounds for axis 0 with size 0
+2025-02-09 19:48:36,111 - ERROR - Error running strategy OBStrategy on EURUSD: Data must be 1-dimensional, got ndarray of shape (0, 2) instead
+2025-02-09 19:48:36,116 - ERROR - Error running strategy OBStrategy on GBPUSD: Data must be 1-dimensional, got ndarray of shape (0, 2) instead
+2025-02-09 19:48:36,116 - INFO - MT5 shutdown successfully
+2025-02-09 19:48:47,486 - INFO - Successfully logged into MT5 account 89059361 on server MetaQuotes-Demo
+2025-02-09 19:48:49,893 - ERROR - Error running strategy FVG on EURUSD: index -1 is out of bounds for axis 0 with size 0
+2025-02-09 19:48:49,904 - ERROR - Error running strategy FVG on GBPUSD: index -1 is out of bounds for axis 0 with size 0
+2025-02-09 19:48:49,936 - INFO - No valid order block detected. Waiting for next interval.
+2025-02-09 19:48:49,959 - INFO - No valid order block detected. Waiting for next interval.
+2025-02-09 19:49:05,835 - ERROR - Error running strategy OBStrategy on GBPUSD: [Errno 22] Invalid argument
+2025-02-09 19:51:26,971 - INFO - Successfully logged into MT5 account 89059361 on server MetaQuotes-Demo
+2025-02-09 19:51:29,578 - ERROR - Error running strategy FVG on EURUSD: index -1 is out of bounds for axis 0 with size 0
+2025-02-09 19:51:29,641 - ERROR - Error running strategy FVG on GBPUSD: index -1 is out of bounds for axis 0 with size 0
+2025-02-09 19:51:29,779 - INFO - No valid order block detected. Waiting for next interval.
+2025-02-09 19:51:29,814 - INFO - No valid order block detected. Waiting for next interval.
+2025-02-09 19:52:19,245 - ERROR - Failed to fetch forex data: [Errno 22] Invalid argument
+2025-02-09 19:52:19,245 - ERROR - Failed to fetch forex data: [Errno 22] Invalid argument
+2025-02-09 19:52:19,248 - WARNING - No forex data available.
+2025-02-09 19:52:19,248 - WARNING - No forex data available.
+2025-02-09 19:57:21,289 - ERROR - Failed to fetch forex data: [Errno 22] Invalid argument
+2025-02-09 19:57:21,289 - ERROR - Failed to fetch forex data: [Errno 22] Invalid argument
+2025-02-09 19:57:21,289 - WARNING - No forex data available.
+2025-02-09 19:57:21,289 - WARNING - No forex data available.
+2025-02-09 20:02:22,487 - ERROR - Failed to fetch forex data: [Errno 22] Invalid argument
+2025-02-09 20:02:22,487 - WARNING - No forex data available.
+2025-02-09 20:02:22,496 - ERROR - Failed to fetch forex data: [Errno 22] Invalid argument
+2025-02-09 20:02:22,496 - WARNING - No forex data available.
+2025-02-09 20:07:24,461 - ERROR - Failed to fetch forex data: [Errno 22] Invalid argument
+2025-02-09 20:07:24,461 - WARNING - No forex data available.
+2025-02-09 20:07:24,461 - ERROR - Failed to fetch forex data: [Errno 22] Invalid argument
+2025-02-09 20:07:24,461 - WARNING - No forex data available.
+2025-02-09 20:08:49,765 - ERROR - Error running strategy OBStrategy on GBPUSD: [Errno 22] Invalid argument
+2025-02-09 20:12:25,990 - ERROR - Failed to fetch forex data: [Errno 22] Invalid argument
+2025-02-09 20:12:25,990 - ERROR - Failed to fetch forex data: [Errno 22] Invalid argument
+2025-02-09 20:12:25,990 - WARNING - No forex data available.
+2025-02-09 20:12:25,990 - WARNING - No forex data available.
+2025-02-09 20:17:27,277 - ERROR - Failed to fetch forex data: [Errno 22] Invalid argument
+2025-02-09 20:17:27,278 - ERROR - Failed to fetch forex data: [Errno 22] Invalid argument
+2025-02-09 20:17:27,278 - WARNING - No forex data available.
+2025-02-09 20:17:27,278 - WARNING - No forex data available.
+2025-02-09 20:22:28,538 - ERROR - Failed to fetch forex data: [Errno 22] Invalid argument
+2025-02-09 20:22:28,538 - ERROR - Failed to fetch forex data: [Errno 22] Invalid argument
+2025-02-09 20:22:28,538 - WARNING - No forex data available.
+2025-02-09 20:22:28,538 - WARNING - No forex data available.
+2025-02-09 20:36:30,738 - ERROR - Failed to fetch forex data: [Errno 22] Invalid argument
+2025-02-09 20:36:30,738 - WARNING - No forex data available.
+2025-02-09 20:36:30,739 - ERROR - Failed to fetch forex data: [Errno 22] Invalid argument
+2025-02-09 20:36:30,739 - WARNING - No forex data available.
+2025-02-09 20:41:32,406 - ERROR - Failed to fetch forex data: [Errno 22] Invalid argument
+2025-02-09 20:41:32,408 - WARNING - No forex data available.
+2025-02-09 20:41:32,412 - ERROR - Failed to fetch forex data: [Errno 22] Invalid argument
+2025-02-09 20:41:32,412 - WARNING - No forex data available.
+2025-02-09 20:46:33,744 - ERROR - Failed to fetch forex data: [Errno 22] Invalid argument
+2025-02-09 20:46:33,744 - WARNING - No forex data available.
+2025-02-09 20:46:33,744 - ERROR - Failed to fetch forex data: [Errno 22] Invalid argument
+2025-02-09 20:46:33,744 - WARNING - No forex data available.
+2025-02-09 20:51:35,069 - ERROR - Failed to fetch forex data: [Errno 22] Invalid argument
+2025-02-09 20:51:35,071 - WARNING - No forex data available.
+2025-02-09 20:51:35,075 - ERROR - Failed to fetch forex data: [Errno 22] Invalid argument
+2025-02-09 20:51:35,075 - WARNING - No forex data available.
+2025-02-09 20:56:36,399 - ERROR - Failed to fetch forex data: [Errno 22] Invalid argument
+2025-02-09 20:56:36,399 - ERROR - Failed to fetch forex data: [Errno 22] Invalid argument
+2025-02-09 20:56:36,400 - WARNING - No forex data available.
+2025-02-09 20:56:36,400 - WARNING - No forex data available.
+2025-02-09 21:01:37,740 - ERROR - Failed to fetch forex data: [Errno 22] Invalid argument
+2025-02-09 21:01:37,740 - WARNING - No forex data available.
+2025-02-09 21:01:37,748 - ERROR - Failed to fetch forex data: [Errno 22] Invalid argument
+2025-02-09 21:01:37,748 - WARNING - No forex data available.
+2025-02-09 21:06:39,248 - ERROR - Failed to fetch forex data: [Errno 22] Invalid argument
+2025-02-09 21:06:39,248 - WARNING - No forex data available.
+2025-02-09 21:06:39,256 - ERROR - Failed to fetch forex data: [Errno 22] Invalid argument
+2025-02-09 21:06:39,256 - WARNING - No forex data available.
+2025-02-09 21:11:40,938 - ERROR - Failed to fetch forex data: [Errno 22] Invalid argument
+2025-02-09 21:11:40,938 - ERROR - Failed to fetch forex data: [Errno 22] Invalid argument
+2025-02-09 21:11:40,943 - WARNING - No forex data available.
+2025-02-09 21:11:40,943 - WARNING - No forex data available.
+2025-02-09 21:16:42,282 - ERROR - Failed to fetch forex data: [Errno 22] Invalid argument
+2025-02-09 21:16:42,282 - WARNING - No forex data available.
+2025-02-09 21:16:42,283 - ERROR - Failed to fetch forex data: [Errno 22] Invalid argument
+2025-02-09 21:16:42,284 - WARNING - No forex data available.
+2025-02-09 21:21:43,792 - ERROR - Failed to fetch forex data: [Errno 22] Invalid argument
+2025-02-09 21:21:43,792 - WARNING - No forex data available.
+2025-02-09 21:21:43,792 - ERROR - Failed to fetch forex data: [Errno 22] Invalid argument
+2025-02-09 21:21:43,792 - WARNING - No forex data available.
+2025-02-09 21:26:45,178 - ERROR - Failed to fetch forex data: [Errno 22] Invalid argument
+2025-02-09 21:26:45,178 - WARNING - No forex data available.
+2025-02-09 21:26:45,178 - ERROR - Failed to fetch forex data: [Errno 22] Invalid argument
+2025-02-09 21:26:45,178 - WARNING - No forex data available.
+2025-02-09 21:31:46,568 - ERROR - Failed to fetch forex data: [Errno 22] Invalid argument
+2025-02-09 21:31:46,568 - WARNING - No forex data available.
+2025-02-09 21:31:46,570 - ERROR - Failed to fetch forex data: [Errno 22] Invalid argument
+2025-02-09 21:31:46,570 - WARNING - No forex data available.
+2025-02-09 21:36:49,437 - ERROR - Failed to fetch forex data: [Errno 22] Invalid argument
+2025-02-09 21:36:49,437 - WARNING - No forex data available.
+2025-02-09 21:36:49,443 - ERROR - Failed to fetch forex data: [Errno 22] Invalid argument
+2025-02-09 21:36:49,443 - WARNING - No forex data available.
+2025-02-09 21:41:50,683 - ERROR - Failed to fetch forex data: [Errno 22] Invalid argument
+2025-02-09 21:41:50,683 - WARNING - No forex data available.
+2025-02-09 21:41:50,683 - ERROR - Failed to fetch forex data: [Errno 22] Invalid argument
+2025-02-09 21:41:50,683 - WARNING - No forex data available.
+2025-02-09 21:46:52,182 - ERROR - Failed to fetch forex data: [Errno 22] Invalid argument
+2025-02-09 21:46:52,185 - ERROR - Failed to fetch forex data: [Errno 22] Invalid argument
+2025-02-09 21:46:52,186 - WARNING - No forex data available.
+2025-02-09 21:46:52,186 - WARNING - No forex data available.
+2025-02-09 21:53:36,117 - ERROR - Failed to fetch forex data: [Errno 22] Invalid argument
+2025-02-09 21:53:36,120 - WARNING - No forex data available.
+2025-02-09 21:53:36,128 - ERROR - Failed to fetch forex data: [Errno 22] Invalid argument
+2025-02-09 21:53:36,128 - WARNING - No forex data available.
+2025-02-09 21:58:37,750 - ERROR - Failed to fetch forex data: [Errno 22] Invalid argument
+2025-02-09 21:58:37,753 - ERROR - Failed to fetch forex data: [Errno 22] Invalid argument
+2025-02-09 21:58:37,753 - WARNING - No forex data available.
+2025-02-09 21:58:37,754 - WARNING - No forex data available.
+2025-02-09 22:03:44,196 - ERROR - Failed to fetch forex data: [Errno 22] Invalid argument
+2025-02-09 22:03:44,196 - ERROR - Failed to fetch forex data: [Errno 22] Invalid argument
+2025-02-09 22:03:44,203 - WARNING - No forex data available.
+2025-02-09 22:03:44,203 - WARNING - No forex data available.
+2025-02-09 22:08:45,408 - ERROR - Failed to fetch forex data: [Errno 22] Invalid argument
+2025-02-09 22:08:45,408 - ERROR - Failed to fetch forex data: [Errno 22] Invalid argument
+2025-02-09 22:08:45,409 - WARNING - No forex data available.
+2025-02-09 22:08:45,409 - WARNING - No forex data available.
+2025-02-09 22:13:48,714 - ERROR - Failed to fetch forex data: [Errno 22] Invalid argument
+2025-02-09 22:13:48,724 - WARNING - No forex data available.
+2025-02-09 22:13:48,722 - ERROR - Failed to fetch forex data: [Errno 22] Invalid argument
+2025-02-09 22:13:48,738 - WARNING - No forex data available.
