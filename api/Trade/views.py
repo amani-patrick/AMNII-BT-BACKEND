@@ -7,53 +7,47 @@ from decimal import Decimal
 from django.db.models import Sum
 from rest_framework.permissions import IsAuthenticated
 
-# Retrieve orders for the logged-in user
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def order_list(request):
-    orders = Order.objects.filter(user=request.user)  # Filter by logged-in user
+    orders = Order.objects.all()
     serializer = OrderSerializer(orders, many=True)
     return Response(serializer.data)
 
-# Create a new order for the logged-in user
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def order_create(request):
-    data = request.data
-    data['user'] = request.user.id  # Associate the order with the logged-in user
-    serializer = OrderSerializer(data=data)
+    serializer = OrderSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-# Retrieve a specific order for the logged-in user
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def order_retrieve(request, pk):
     try:
-        order = Order.objects.get(pk=pk, user=request.user)  # Filter by user
+        order = Order.objects.get(pk=pk)
     except Order.DoesNotExist:
-        return Response({'message': 'Order not found or does not belong to you.'}, status=status.HTTP_404_NOT_FOUND)
+        return Response({'message': 'Order not found.'}, status=status.HTTP_404_NOT_FOUND)
 
     serializer = OrderSerializer(order)
     return Response(serializer.data)
 
-# Update the status of an order for the logged-in user
 @api_view(['PUT'])
 @permission_classes([IsAuthenticated])
 def order_update_status(request, pk):
     from django.utils import timezone
 
     try:
-        order = Order.objects.get(pk=pk, user=request.user)  # Filter by user
+        order = Order.objects.get(pk=pk)
     except Order.DoesNotExist:
-        return Response({'message': 'Order not found or does not belong to you.'}, status=status.HTTP_404_NOT_FOUND)
+        return Response({'message': 'Order not found.'}, status=status.HTTP_404_NOT_FOUND)
 
-    new_status = request.data.get('status')
+    new_status = request.data.get('status') 
     if new_status:
-        new_status = new_status.upper()
-        valid_statuses = ['PENDING', 'COMPLETED', 'CANCELED']
+        new_status = new_status.upper() 
+        valid_statuses = ['PENDING', 'COMPLETED', 'CANCELED'] 
         if new_status in valid_statuses:
             order.status = new_status
             if new_status == 'COMPLETED':
@@ -67,14 +61,14 @@ def order_update_status(request, pk):
 
     return Response({'detail': 'No status provided.'}, status=status.HTTP_400_BAD_REQUEST)
 
-# Update the take profit and stop loss of an order for the logged-in user
+
 @api_view(['PUT'])
 @permission_classes([IsAuthenticated])
 def order_update_take_profit_stop_loss(request, pk):
     try:
-        order = Order.objects.get(pk=pk, user=request.user)  # Filter by user
+        order = Order.objects.get(pk=pk)
     except Order.DoesNotExist:
-        return Response({'detail': 'Order not found or does not belong to you.'}, status=status.HTTP_404_NOT_FOUND)
+        return Response({'detail': 'Order not found.'}, status=status.HTTP_404_NOT_FOUND)
 
     take_profit = request.data.get('take_profit')
     stop_loss = request.data.get('stop_loss')
@@ -97,14 +91,13 @@ def order_update_take_profit_stop_loss(request, pk):
         'stop_loss': order.stop_loss
     }, status=status.HTTP_200_OK)
 
-# Update the PnL (Profit and Loss) for an order for the logged-in user
 @api_view(['PUT'])
 @permission_classes([IsAuthenticated])
 def order_update_pnL(request, pk):
     try:
-        order = Order.objects.get(pk=pk, user=request.user)  # Filter by user
+        order = Order.objects.get(pk=pk)
     except Order.DoesNotExist:
-        return Response({'detail': 'Order not found or does not belong to you.'}, status=status.HTTP_404_NOT_FOUND)
+        return Response({'detail': 'Order not found.'}, status=status.HTTP_404_NOT_FOUND)
 
     current_price = request.data.get('current_price')
     if current_price is not None:
@@ -125,23 +118,20 @@ def order_update_pnL(request, pk):
 
     return Response({'detail': 'Current price is required for PnL calculation.'}, status=status.HTTP_400_BAD_REQUEST)
 
-# Delete an order for the logged-in user
 @api_view(['DELETE'])
 @permission_classes([IsAuthenticated])
 def order_delete(request, pk):
     try:
-        order = Order.objects.get(pk=pk, user=request.user)  # Filter by user
+        order = Order.objects.get(pk=pk)
     except Order.DoesNotExist:
-        return Response({'detail': 'Order not found or does not belong to you.'}, status=status.HTTP_404_NOT_FOUND)
+        return Response({'detail': 'Order not found.'}, status=status.HTTP_404_NOT_FOUND)
 
     order.delete()
     return Response({'message': 'Order deleted successfully.'}, status=status.HTTP_204_NO_CONTENT)
 
-# Get the net profit for the logged-in user
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
 def net_profit(request):
-    total_pnl = Order.objects.filter(user=request.user).aggregate(total_pnl=Sum('pnl'))['total_pnl']
+    total_pnl = Order.objects.aggregate(total_pnl=Sum('pnl'))['total_pnl']
     total_pnl = total_pnl if total_pnl is not None else Decimal('0.00')
 
     return Response({'net_profit': str(total_pnl)}, status=status.HTTP_200_OK)

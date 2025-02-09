@@ -7,6 +7,7 @@ from rest_framework import serializers
 from django.contrib.auth.models import User
 from django.contrib.auth.password_validation import validate_password
 
+
 class RegisterSerializer(serializers.ModelSerializer):
     # Password is write-only and validated using Django's built-in password validators
     password = serializers.CharField(
@@ -63,3 +64,4 @@ class LoginSerializer(serializers.Serializer):
             raise serializers.ValidationError("Invalid username or password.")
         
         return user
+

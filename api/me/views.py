@@ -1,18 +1,14 @@
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
-from .serializers import UserProfileSerializer, TradeSerializer
-from api.orders.models import Order  # 
+from rest_framework.response import Response
+from django.contrib.auth import get_user_model
+from .serializers import UserSerializer
+
+User = get_user_model()
 
 @api_view(['GET'])
-def me_view(request):
-    if not request.user.is_authenticated:
-        return Response({"detail": "Authentication credentials were not provided."}, status=401)
-    user = request.user
-    trades = Order.objects.filter(user=user)
-    balance = user.profile.balance if hasattr(user, 'profile') else 0
-    user_data = UserProfileSerializer(user, context={'request': request}).data
-    user_data['trades'] = TradeSerializer(trades, many=True).data
-    user_data['balance'] = balance
-    
-    return Response(user_data)
+@permission_classes([IsAuthenticated])
+def user_me(request):
+    """Return the authenticated user's details."""
+    serializer = UserSerializer(request.user)
+    return Response(serializer.data)

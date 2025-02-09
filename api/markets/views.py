@@ -7,8 +7,6 @@ import logging
 
 # Set up logger
 logger = logging.getLogger(__name__)
-
-# API Key for Alpha Vantage
 API_KEY = 'RA9EAD30J57VC8IR'
 
 @api_view(['GET'])
