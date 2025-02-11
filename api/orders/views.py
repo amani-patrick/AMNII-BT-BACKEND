@@ -11,20 +11,25 @@ from rest_framework.permissions import IsAuthenticated
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def order_list(request):
-    orders = Order.objects.filter(user=request.user)  # Filter by logged-in user
+    orders = Order.objects.filter(user=request.user)
     serializer = OrderSerializer(orders, many=True)
     return Response(serializer.data)
-
 # Create a new order for the logged-in user
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def order_create(request):
     data = request.data
-    data['user'] = request.user.id  # Associate the order with the logged-in user
+    data['user'] = request.user.id  # Ensure the user is passed correctly
+
+    data['action'] = data.get('action', '').upper()
+    if data['action'] not in ['BUY', 'SELL']:
+        return Response({'detail': 'Invalid action. Must be BUY or SELL.'}, status=status.HTTP_400_BAD_REQUEST)
+    
     serializer = OrderSerializer(data=data)
     if serializer.is_valid():
-        serializer.save()
+        order = serializer.save(user=request.user)  # Explicitly set the user
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+    
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 # Retrieve a specific order for the logged-in user
@@ -32,13 +37,12 @@ def order_create(request):
 @permission_classes([IsAuthenticated])
 def order_retrieve(request, pk):
     try:
-        order = Order.objects.get(pk=pk, user=request.user)  # Filter by user
+        order = Order.objects.get(pk=pk, user=request.user)
     except Order.DoesNotExist:
         return Response({'message': 'Order not found or does not belong to you.'}, status=status.HTTP_404_NOT_FOUND)
 
     serializer = OrderSerializer(order)
     return Response(serializer.data)
-
 # Update the status of an order for the logged-in user
 @api_view(['PUT'])
 @permission_classes([IsAuthenticated])
@@ -46,7 +50,7 @@ def order_update_status(request, pk):
     from django.utils import timezone
 
     try:
-        order = Order.objects.get(pk=pk, user=request.user)  # Filter by user
+        order = Order.objects.get(pk=pk, user=request.user)
     except Order.DoesNotExist:
         return Response({'message': 'Order not found or does not belong to you.'}, status=status.HTTP_404_NOT_FOUND)
 
@@ -67,12 +71,12 @@ def order_update_status(request, pk):
 
     return Response({'detail': 'No status provided.'}, status=status.HTTP_400_BAD_REQUEST)
 
-# Update the take profit and stop loss of an order for the logged-in user
+# Update take profit and stop loss for the logged-in user
 @api_view(['PUT'])
 @permission_classes([IsAuthenticated])
-def order_update_take_profit_stop_loss(request, pk):
+def order_update_tp_sl(request, pk):
     try:
-        order = Order.objects.get(pk=pk, user=request.user)  # Filter by user
+        order = Order.objects.get(pk=pk, user=request.user)
     except Order.DoesNotExist:
         return Response({'detail': 'Order not found or does not belong to you.'}, status=status.HTTP_404_NOT_FOUND)
 
@@ -97,12 +101,12 @@ def order_update_take_profit_stop_loss(request, pk):
         'stop_loss': order.stop_loss
     }, status=status.HTTP_200_OK)
 
-# Update the PnL (Profit and Loss) for an order for the logged-in user
+# Update the PnL for an order
 @api_view(['PUT'])
 @permission_classes([IsAuthenticated])
-def order_update_pnL(request, pk):
+def order_update_pnl(request, pk):
     try:
-        order = Order.objects.get(pk=pk, user=request.user)  # Filter by user
+        order = Order.objects.get(pk=pk, user=request.user)
     except Order.DoesNotExist:
         return Response({'detail': 'Order not found or does not belong to you.'}, status=status.HTTP_404_NOT_FOUND)
 
@@ -114,6 +118,9 @@ def order_update_pnL(request, pk):
             return Response({'detail': 'Invalid current price.'}, status=status.HTTP_400_BAD_REQUEST)
 
         pnl = current_price - order.entry_price
+        if order.action == 'SELL':
+            pnl = order.entry_price - current_price
+        
         if order.take_profit and current_price >= order.take_profit:
             pnl = order.take_profit - order.entry_price
         elif order.stop_loss and current_price <= order.stop_loss:
@@ -125,19 +132,19 @@ def order_update_pnL(request, pk):
 
     return Response({'detail': 'Current price is required for PnL calculation.'}, status=status.HTTP_400_BAD_REQUEST)
 
-# Delete an order for the logged-in user
+# Delete an order
 @api_view(['DELETE'])
 @permission_classes([IsAuthenticated])
 def order_delete(request, pk):
     try:
-        order = Order.objects.get(pk=pk, user=request.user)  # Filter by user
+        order = Order.objects.get(pk=pk, user=request.user)
     except Order.DoesNotExist:
         return Response({'detail': 'Order not found or does not belong to you.'}, status=status.HTTP_404_NOT_FOUND)
 
     order.delete()
     return Response({'message': 'Order deleted successfully.'}, status=status.HTTP_204_NO_CONTENT)
 
-# Get the net profit for the logged-in user
+# Get net profit
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def net_profit(request):
