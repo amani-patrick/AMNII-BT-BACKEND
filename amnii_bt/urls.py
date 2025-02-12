@@ -13,8 +13,7 @@ def health_check(request):
 
 urlpatterns = [
     path('', root_redirect, name='root_redirect'),
-    path('healthamnii/', health_check, name='health_check'),
-    path('docs/', include('rest_framework_swagger.urls')),  
+    path('healthamnii/', health_check, name='health_check'),  
     path('admin/', admin.site.urls),
     path('api/', include('api.urls')),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),

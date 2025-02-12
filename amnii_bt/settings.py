@@ -23,12 +23,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = "amani-pazzo"
-APPEND_SLASH = False
+APPEND_SLASH = True
 CSRF_COOKIE_HTTPONLY = True  
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(days=5),
@@ -37,7 +37,7 @@ SIMPLE_JWT = {
     'BLACKLIST_AFTER_ROTATION': True, 
 }
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 SIMPLE_JWT = {
     'BLACKLIST_AFTER_ROTATION': True,
     'ROTATE_REFRESH_TOKENS': True,
