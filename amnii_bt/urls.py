@@ -13,7 +13,7 @@ def health_check(request):
 
 urlpatterns = [
     path('', root_redirect, name='root_redirect'),
-    path('health/', health_check, name='health_check'),
+    path('healthamnii/', health_check, name='health_check'),
     path('docs/', include('rest_framework_swagger.urls')),  
     path('admin/', admin.site.urls),
     path('api/', include('api.urls')),
